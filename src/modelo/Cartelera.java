@@ -22,12 +22,22 @@ public class Cartelera {
         return listaPeliculas;
     }
 
-    public String getHora() {
-        return hora;
+    // Buscar película por ID
+    public Pelicula buscarPeliculaPorId(int id) {
+        for (Pelicula pelicula : listaPeliculas) {
+            if (pelicula.getId() == id) {
+                return pelicula;
+            }
+        }
+        return null; // Si no se encuentra la película
     }
 
-    public String getDia() {
-        return dia;
+    // Eliminar película por ID
+    public boolean eliminarPelicula(int id) {
+        return listaPeliculas.removeIf(pelicula -> pelicula.getId() == id);
     }
+
+    public String getHora() {return hora;}
+    public String getDia() {return dia;}
 
 }
