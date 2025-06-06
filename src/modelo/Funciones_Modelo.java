@@ -15,7 +15,7 @@ public class Funciones_Modelo {
         String contrasena = "1234";
         String rol = "Administrador";
         Usuario usuario = new Usuario(username,contrasena,rol);
-        listaUsuarios.add(usuario);
+        //listaUsuarios.add(usuario);
     }
 
     public Usuario login(String username, String password) {
