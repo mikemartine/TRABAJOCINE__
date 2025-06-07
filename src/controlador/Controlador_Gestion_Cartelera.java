@@ -2,8 +2,6 @@ package controlador;
 
 import modelo.*;
 import vista.Vista_Gestion_Cartelera;
-import vista.Vista_Principal;
-
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -18,12 +16,9 @@ public class Controlador_Gestion_Cartelera implements ActionListener {
 
     public Controlador_Gestion_Cartelera() {
         vista_gestion_cartelera = new Vista_Gestion_Cartelera();
-
         inicializarVentana();
 
-
-        modeloTablaCartelera = new DefaultTableModel(new String[]{"ID", "Título", "Género", "Duración", "Clasificación", "Horario", "Sala"},0)
-        {
+        modeloTablaCartelera = new DefaultTableModel(new String[]{"ID", "Título", "Género", "Duración", "Clasificación", "Horario", "Sala"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -35,19 +30,34 @@ public class Controlador_Gestion_Cartelera implements ActionListener {
         vista_gestion_cartelera.btnEditar.addActionListener(this);
         vista_gestion_cartelera.btnAsignar.addActionListener(this);
 
-
         // Cargar la cartelera al iniciar la vista
         cargarCartelera();
 
-        // Mostrar las películas en la tabla
-        mostrarPeliculasEnTabla(cartelera);
+        // Mostrar las funciones en la tabla
+        mostrarFuncionesEnTabla();
+    }
 
+    public void mostrarFuncionesEnTabla() {
+        modeloTablaCartelera.setRowCount(0); // Limpiar la tabla
+
+        for (Funcion f : cartelera.getFunciones()) {
+            Pelicula p = f.getPelicula(); // Obtener la película asociada a la función
+            Object[] fila = {
+                    p.getId(),
+                    p.getTitulo(),
+                    p.getGenero(),
+                    p.getDuracion() + " min",
+                    p.getClasificacion(),
+                    f.getHora() + " (" + f.getDia() + ")",
+                    f.getSala() != null ? "Sala " + f.getSala().getNumero() : "N/A"
+            };
+            modeloTablaCartelera.addRow(fila); // Agregar la fila a la tabla
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == vista_gestion_cartelera.btnAgregarPelicula){
-
+        if (e.getSource() == vista_gestion_cartelera.btnAgregarPelicula) {
             try {
                 // ID
                 String idStr = JOptionPane.showInputDialog(null, "Ingrese ID de la película:");
@@ -84,8 +94,19 @@ public class Controlador_Gestion_Cartelera implements ActionListener {
 
                 JOptionPane.showMessageDialog(null, "Película creada con éxito:\n" + nuevaPelicula.getTitulo());
 
-                cartelera.agregarPelicula(nuevaPelicula);
-                mostrarPeliculasEnTabla(cartelera);
+                // Crear una función (se requiere una sala y un horario/día)
+                String hora = "00:00"; // Simulado
+                String dia = "-"; // Simulado
+                //Sala salaSimulada = new Sala(1, 5, 6); // Sala simulada
+                Sala salaSimulada = null; // Sala simulada
+
+                // Crear una función para la película
+                Funcion nuevaFuncion = new Funcion(nuevaPelicula, salaSimulada, hora, dia);
+
+                // Agregar la función a la cartelera
+                cartelera.agregarFuncion(nuevaFuncion);
+
+                mostrarFuncionesEnTabla();
 
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "Error en los datos numéricos (ID o duración).", "Error", JOptionPane.ERROR_MESSAGE);
@@ -93,15 +114,14 @@ public class Controlador_Gestion_Cartelera implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+
         if (e.getSource() == vista_gestion_cartelera.btnEditar) {
             try {
                 String idStr = JOptionPane.showInputDialog(null, "Ingrese ID de la película:");
                 if (idStr == null) return; // Cancelado
                 int id = Integer.parseInt(idStr);
 
-                GestorCinesCarteleras gestor = GestorCinesCarteleras.getInstancia();
-                Cartelera cartelera = gestor.getCartelera1(); // Obtener la cartelera única
-                Pelicula pelicula = gestor.obtenerPeliculaPorId(id);
+                Pelicula pelicula = obtenerPeliculaPorId(id);
                 if (pelicula == null) {
                     JOptionPane.showMessageDialog(null, "Película no encontrada.");
                     return;
@@ -118,26 +138,35 @@ public class Controlador_Gestion_Cartelera implements ActionListener {
                         opciones[0]);
 
                 if (opcion == 0) { // Modificar
+                    // Código de modificación de la película (similar al que ya tienes)
+                    // Actualización de datos...
+
+                    // Modificar el título
                     String titulo = JOptionPane.showInputDialog(null, "Nuevo título:", pelicula.getTitulo());
                     if (titulo == null || titulo.trim().isEmpty()) return;
 
+                    // Modificar el género
                     String genero = JOptionPane.showInputDialog(null, "Nuevo género:", pelicula.getGenero());
                     if (genero == null || genero.trim().isEmpty()) return;
 
+                    // Modificar el idioma
                     String idioma = JOptionPane.showInputDialog(null, "Nuevo idioma:", pelicula.getIdioma());
                     if (idioma == null || idioma.trim().isEmpty()) return;
 
+                    // Modificar la duración
                     String duracionStr = JOptionPane.showInputDialog(null, "Nueva duración (minutos):", pelicula.getDuracion());
                     if (duracionStr == null) return;
                     int duracion = Integer.parseInt(duracionStr);
 
+                    // Modificar la clasificación
                     String clasificacion = JOptionPane.showInputDialog(null, "Nueva clasificación:", pelicula.getClasificacion());
                     if (clasificacion == null || clasificacion.trim().isEmpty()) return;
 
+                    // Modificar la sinopsis
                     String sinopsis = JOptionPane.showInputDialog(null, "Nueva sinopsis:", pelicula.getSinopsis());
                     if (sinopsis == null || sinopsis.trim().isEmpty()) return;
 
-                    // Actualizar datos
+                    // Actualizar los datos de la película
                     pelicula.setTitulo(titulo);
                     pelicula.setGenero(genero);
                     pelicula.setIdioma(idioma);
@@ -146,22 +175,151 @@ public class Controlador_Gestion_Cartelera implements ActionListener {
                     pelicula.setSinopsis(sinopsis);
 
                     JOptionPane.showMessageDialog(null, "Película modificada con éxito.");
+
+
                 } else if (opcion == 1) { // Eliminar
                     // Eliminar la película de la cartelera
-                    cartelera.getListaPeliculas().removeIf(p -> p.getId() == id);
+                    cartelera.getFunciones().removeIf(f -> f.getPelicula().getId() == id);
                     JOptionPane.showMessageDialog(null, "Película eliminada con éxito.");
                 }
 
-                // Actualizar tabla
-                mostrarPeliculasEnTabla(cartelera);
+                mostrarFuncionesEnTabla();
 
             } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(null, "ID o duración inválida.", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "ID inválida.", "Error", JOptionPane.ERROR_MESSAGE);
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
 
+        if (e.getSource() == vista_gestion_cartelera.btnAsignar) {
+            // Asignar película a una función en una sala (similar a lo que ya tienes)
+            try {
+                // Solicitar ID de la película
+                String idStr = JOptionPane.showInputDialog(null, "Ingrese ID de la película a asignar:");
+                if (idStr == null) return;
+                int id = Integer.parseInt(idStr);
+
+                // Buscar la película por ID
+                Pelicula pelicula = GestorCinesCarteleras.getInstancia().obtenerPeliculaPorId(id);
+                if (pelicula == null) {
+                    JOptionPane.showMessageDialog(null, "Película no encontrada.");
+                    return;
+                }
+
+                // Solicitar la hora de la función
+                String hora = JOptionPane.showInputDialog(null, "Ingrese hora (formato HH:mm):");
+                if (hora == null || hora.trim().isEmpty()) return;
+
+                // Solicitar el día de la función
+                String dia = JOptionPane.showInputDialog(null, "Ingrese día:");
+                if (dia == null || dia.trim().isEmpty()) return;
+
+                // Obtener lista de cines disponibles
+                GestorCinesCarteleras gestor = GestorCinesCarteleras.getInstancia();
+                ArrayList<Cine> listaCines = gestor.getListaCines();
+                if (listaCines.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "No hay cines disponibles.");
+                    return;
+                }
+
+                // Seleccionar el cine en el cual se asignará la película
+                String[] nombresCines = listaCines.stream()
+                        .map(Cine::getNombre)
+                        .toArray(String[]::new);
+                String cineSeleccionadoNombre = (String) JOptionPane.showInputDialog(null,
+                        "Seleccione un cine:",
+                        "Cine",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        nombresCines,
+                        nombresCines[0]);
+
+                if (cineSeleccionadoNombre == null) return;
+
+                // Obtener el cine seleccionado
+                Cine cineSeleccionado = listaCines.stream()
+                        .filter(c -> c.getNombre().equals(cineSeleccionadoNombre))
+                        .findFirst()
+                        .orElse(null);
+
+                if (cineSeleccionado == null || cineSeleccionado.getListaSalas().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Cine no válido o sin salas.");
+                    return;
+                }
+
+                // Seleccionar la sala dentro del cine
+                String[] opcionesSalas = cineSeleccionado.getListaSalas().stream()
+                        .map(sala -> "Sala " + sala.getNumero())
+                        .toArray(String[]::new);
+
+                String salaSeleccionadaStr = (String) JOptionPane.showInputDialog(null,
+                        "Seleccione una sala:",
+                        "Sala",
+                        JOptionPane.QUESTION_MESSAGE,
+                        null,
+                        opcionesSalas,
+                        opcionesSalas[0]);
+
+                if (salaSeleccionadaStr == null) return;
+
+                // Obtener el número de la sala seleccionada
+                int numeroSala = Integer.parseInt(salaSeleccionadaStr.replace("Sala ", ""));
+                Sala salaSeleccionada = cineSeleccionado.getListaSalas().stream()
+                        .filter(s -> s.getNumero() == numeroSala)
+                        .findFirst()
+                        .orElse(null);
+
+                if (salaSeleccionada == null) {
+                    JOptionPane.showMessageDialog(null, "Sala no encontrada.");
+                    return;
+                }
+
+                Funcion funcionExistente = cartelera.buscarFuncionPorPeliculaId(pelicula.getId());
+
+                if (funcionExistente != null) {
+                    // Actualizar hora, día y sala
+                    funcionExistente.setHora(hora);
+                    funcionExistente.setDia(dia);
+                    funcionExistente.setSala(salaSeleccionada);
+                    JOptionPane.showMessageDialog(null, "Función actualizada exitosamente.");
+                } else {
+                    Funcion nuevaFuncion = new Funcion(pelicula, salaSeleccionada, hora, dia);
+                    cartelera.agregarFuncion(nuevaFuncion);
+                    JOptionPane.showMessageDialog(null, "Función asignada exitosamente.");
+                }
+
+
+                // Crear la nueva función
+                //Funcion funcion = new Funcion(pelicula, salaSeleccionada, hora, dia);
+
+                // Asignar la función a la cartelera
+                //cartelera.agregarFuncion(funcion);
+
+                // Asignar la película a la sala visualmente (opcional)
+                //salaSeleccionada.asignarPelicula(pelicula);
+
+                // Mostrar mensaje de éxito
+                //JOptionPane.showMessageDialog(null, "Función asignada exitosamente.");
+
+                // Actualizar la tabla para mostrar la nueva función
+                mostrarFuncionesEnTabla();
+
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "ID inválido o número de sala incorrecto.", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    public Pelicula obtenerPeliculaPorId(int id) {
+        for (Funcion f : cartelera.getFunciones()) {
+            if (f.getPelicula().getId() == id) {
+                return f.getPelicula();
+            }
+        }
+        return null;
     }
 
     private void cargarCartelera() {
@@ -171,82 +329,18 @@ public class Controlador_Gestion_Cartelera implements ActionListener {
 
         // Si la cartelera es null (no existe), se crea una nueva
         if (cartelera == null) {
-            cartelera = new Cartelera("18:00", "Lunes"); // Horario y día por defecto
+            cartelera = new Cartelera(); // Horario y día por defecto
             gestor.setCartelera1(cartelera); // Establecer la cartelera en el gestor
         }
     }
 
-    public void mostrarPeliculasEnTabla(Cartelera cartelera) {
-        modeloTablaCartelera.setRowCount(0);
-
-        for (Pelicula p : cartelera.getListaPeliculas()) {
-            Object[] fila = {
-                    p.getId(),
-                    p.getTitulo(),
-                    p.getGenero(),
-                    p.getDuracion() + " min",
-                    p.getClasificacion(),
-                    (cartelera.getHora() != null ? cartelera.getHora() : "Sin hora") +
-                            " (" + (cartelera.getDia() != null ? cartelera.getDia() : "Sin día") + ")",
-                    p.getSalaAsignada() != null ? "Sala " + p.getSalaAsignada().getNumero() : "N/A"
-            };
-            modeloTablaCartelera.addRow(fila);
-
-            }
-        }
-    private void inicializarVentana(){
+    private void inicializarVentana() {
         vista_gestion_cartelera.setContentPane(vista_gestion_cartelera.JPanelGestionCartelera);
         vista_gestion_cartelera.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         vista_gestion_cartelera.pack();
         vista_gestion_cartelera.setTitle("Gestion Cartelera");
         vista_gestion_cartelera.setMinimumSize(new Dimension(600, 400));
         vista_gestion_cartelera.setLocationRelativeTo(null);
-
         vista_gestion_cartelera.setVisible(true);
-    }
-
-
-    public void cargarDatosPrueba(){
-        ArrayList<Cine> listaCines = new ArrayList<>();
-        ArrayList<Cartelera> listaFunciones = new ArrayList<>();
-        Cine cine1 = new Cine(1,"Multicines","Cuenca","Don Bosco");
-
-        // Crear salas
-        Sala sala1 = new Sala(1, 5, 6);//30 asientos
-        Sala sala2 = new Sala(2, 4, 4);//16 asientos
-
-        cine1.agregarSala(sala1);
-        cine1.agregarSala(sala2);
-
-        Pelicula peli1 = new Pelicula(1,"Oppenheimer","Drama","Ingles",180,"PG-13","Historia del creador de la bomba atómica.");
-        Pelicula peli2 = new Pelicula(2,"Toy Story","Infantil","Español",150,"PG-13","Historia de un mundo de juguetes");
-
-        //este ya seria el otro btn
-        sala1.asignarPelicula(peli1);
-        sala2.asignarPelicula(peli2);
-
-        //asignar cartelera
-        cartelera = new Cartelera(null, null); // sin hora ni día
-
-        cartelera.agregarPelicula(peli1);
-        cartelera.agregarPelicula(peli2);
-        listaFunciones.add(cartelera);
-// Mostrar cartelera
-        /*for (Pelicula p : cartelera.getListaPeliculas()) {
-            System.out.println("Película: " + p.getTitulo() +
-                    " | Sala: " + p.getSalaAsignada().getNumero() +
-                    " | Hora: " + cartelera.getHora() +
-                    " | Día: " + cartelera.getDia());
-        }
-
-        Sala sala11 = new Sala(1, 5, 8); // 5 filas, 8 columnas
-        sala11.getAsientos()[0][0].ocupar("Carlos");
-        sala11.getAsientos()[2][3].ocupar("Ana");
-        sala11.mostrarPlanoAsientos();*/
-
-
-        //poner en la tabla
-        mostrarPeliculasEnTabla(cartelera);
-
     }
 }

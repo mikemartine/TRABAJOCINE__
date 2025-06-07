@@ -35,7 +35,7 @@ public class Controlador_Principal implements ActionListener {
         }
         //VENTAS RESERVA
         if(e.getSource()==vistaPrincipal.btnVentarReserva){
-
+            new Controlador_Ventas_y_Reservas();
         }
         //GESTION USUARIOS
         if(e.getSource()==vistaPrincipal.btnGestionUsuarios){

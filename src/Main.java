@@ -1,6 +1,7 @@
 import controlador.Controlador_Gestion_Cartelera;
 import controlador.Controlador_Login;
 import controlador.Controlador_Principal;
+import controlador.Controlador_Ventas_y_Reservas;
 import modelo.Cartelera;
 import modelo.Cine;
 import modelo.Pelicula;
@@ -14,7 +15,7 @@ public class Main {
         new Controlador_Login();
         //new Controlador_Principal();
         //new Controlador_Gestion_Cartelera();
-
+        //new Controlador_Ventas_y_Reservas();
     }
 
 

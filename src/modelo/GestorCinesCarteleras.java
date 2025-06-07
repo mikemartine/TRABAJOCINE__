@@ -30,14 +30,25 @@ public class GestorCinesCarteleras {
         listaCines.add(cine1);
         listaCines.add(cine2);
 
+        //agregar sals al cine "Multicines"
+        Sala sala1 = new Sala(1, 5, 6);  // Sala 1: 5 filas, 6 columnas
+        Sala sala2 = new Sala(2, 4, 4);  // Sala 2: 4 filas, 4 columnas
+        cine1.agregarSala(sala1);  // Agregar sala 1 a "Multicines"
+        cine1.agregarSala(sala2);  // Agregar sala 2 a "Multicines"
+
         // Películas
         Pelicula peli1 = new Pelicula(1, "Oppenheimer", "Drama", "Ingles", 180, "PG-13", "Historia del creador de la bomba atómica.");
         Pelicula peli2 = new Pelicula(2, "Toy Story", "Infantil", "Español", 150, "PG-13", "Historia de un mundo de juguetes");
 
         // Crear Carteleras y asignar películas
-        cartelera1 = new Cartelera("18:00", "Lunes");
-        cartelera1.agregarPelicula(peli1);
-        cartelera1.agregarPelicula(peli2);
+        cartelera1 = new Cartelera(); // ✔ Constructor sin parámetros
+        Funcion funcion = new Funcion(peli1, sala1, "10:00", "LUNES");
+        Funcion funcion2 = new Funcion(peli2, sala2, "11:00", "SABADO");
+        cartelera1.agregarFuncion(funcion);
+        cartelera1.agregarFuncion(funcion2);
+        //cartelera1.agregarPelicula(peli1);
+        //cartelera1.agregarPelicula(peli2);
+
 
         //listaCarteleras.add(cartelera1);
 
@@ -72,9 +83,9 @@ public class GestorCinesCarteleras {
 
     // Obtener película por ID
     public Pelicula obtenerPeliculaPorId(int id) {
-        for (Pelicula pelicula : cartelera1.getListaPeliculas()) {
-            if (pelicula.getId() == id) {
-                return pelicula;
+        for (Funcion funcion : cartelera1.getFunciones()) {
+            if (funcion.getPelicula().getId() == id) {
+                return funcion.getPelicula();
             }
         }
         return null;

@@ -4,11 +4,33 @@ import java.util.ArrayList;
 
 public class Cartelera {
 
-    private String hora;
+   /* private String hora;
     private String dia;
 
     ArrayList<Pelicula> listaPeliculas = new ArrayList<>();
 
+*/
+    private ArrayList<Funcion> funciones;
+    public Cartelera() {
+        this.funciones = new ArrayList<>();
+    }
+
+    public void agregarFuncion(Funcion funcion) {
+        funciones.add(funcion);
+    }
+
+    public ArrayList<Funcion> getFunciones() {
+        return funciones;
+    }
+    public Funcion buscarFuncionPorPeliculaId(int idPelicula) {
+        for (Funcion f : funciones) {
+            if (f.getPelicula().getId() == idPelicula) return f;
+        }
+        return null;
+    }
+
+
+/*
     public Cartelera(String hora, String dia) {
         this.hora = hora;
         this.dia = dia;
@@ -37,7 +59,15 @@ public class Cartelera {
         return listaPeliculas.removeIf(pelicula -> pelicula.getId() == id);
     }
 
+    public void setHora(String hora) {
+        this.hora = hora;
+    }
+
+    public void setDia(String dia) {
+        this.dia = dia;
+    }
+
     public String getHora() {return hora;}
     public String getDia() {return dia;}
-
+*/
 }
