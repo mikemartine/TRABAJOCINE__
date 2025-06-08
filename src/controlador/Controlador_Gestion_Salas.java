@@ -38,6 +38,7 @@ public class Controlador_Gestion_Salas implements ActionListener {
 
         //para tener una mejor vista de la ventana la configuramos
         vista.setContentPane(vista.JPanelControlSalas);
+        vista.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         vista.pack();
         vista.setMinimumSize(new Dimension(600,400));
         vista.setLocationRelativeTo(null);

@@ -2,6 +2,7 @@ package controlador;
 
 import vista.Vista_Reporte;
 
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,6 +28,7 @@ public class Controlador_Reportes implements ActionListener {
 
         //Configuramos la venta para que se muestre como queremos
         vistaReporte.setContentPane(vistaReporte.JPanelRepote);
+        vistaReporte.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         vistaReporte.pack();
         vistaReporte.setMinimumSize(new Dimension(600, 400));
         vistaReporte.setLocationRelativeTo(null);
