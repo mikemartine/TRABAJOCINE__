@@ -15,15 +15,29 @@ import java.util.List;
 public class Controlador_Gestion_Salas implements ActionListener {
 
     private final Vista_Control_Salas vista;
+    DefaultTableModel modeloTablaSala;
 
 
     public Controlador_Gestion_Salas() {
         this.vista = new Vista_Control_Salas();
 
+        modeloTablaSala = new DefaultTableModel(new String[]{"ID","Disponibilidad","Capacidad"},0)
+        {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        //asociar modelo a la tabla
+        vista.tablaSala.setModel(modeloTablaSala);
+
+        //Iniciar el contenido de la vista
         inicializarVista();
         agregarEventos();
 
-        //para tener una mejor vista de la ventana
+        //para tener una mejor vista de la ventana la configuramos
+        vista.setContentPane(vista.JPanelControlSalas);
         vista.pack();
         vista.setMinimumSize(new Dimension(600,400));
         vista.setLocationRelativeTo(null);
@@ -38,14 +52,6 @@ public class Controlador_Gestion_Salas implements ActionListener {
 
         // Llenar combo de cines según ciudad seleccionada (inicial)
         actualizarComboCines("Cuenca");
-
-        // Configurar tabla vacía
-        DefaultTableModel modelo = new DefaultTableModel(null, new String[]{"ID", "Disponibilidad", "Capacidad"});
-        vista.tablaSala.setModel(modelo);
-
-        // Mostrar panel
-        //se muestra la ventana centrada
-        vista.setContentPane(vista.JPanelControlSalas);
     }
 
     private void agregarEventos() {
@@ -55,23 +61,6 @@ public class Controlador_Gestion_Salas implements ActionListener {
         vista.btnVolver.addActionListener(this);
     }
 
-    /*
-    private void agregarEventos() {
-        // Evento al cambiar de ciudad
-        vista.cmbCiudad.addActionListener(e -> {
-            String ciudad = (String) vista.cmbCiudad.getSelectedItem();
-            if (ciudad != null) {
-                actualizarComboCines(ciudad);
-            }
-        });
-
-        // Evento al hacer clic en "Mostrar Salas"
-        vista.btnBuscar.addActionListener(e -> mostrarSalas());
-
-        // Evento al hacer clic en "Volver"
-        vista.btnVolver.addActionListener(e -> vista.dispose());
-    }
-    */
     private void actualizarComboCines(String ciudad) {
         vista.cmbCine.removeAllItems(); // Limpiar
 
@@ -91,18 +80,18 @@ public class Controlador_Gestion_Salas implements ActionListener {
 
         List<Sala> salas = cineSeleccionado.getListaSalas();
 
-        DefaultTableModel modelo = new DefaultTableModel(null, new String[]{"ID", "Disponibilidad", "Capacidad"});
+        //modeloTablaSala.setColumnCount(0);//limpiar antes de mostrar la nueva informacion
 
         for (Sala sala : salas) {
             String estado = sala.hayAsientosDisponibles() ? "Disponible" : "No disponible";
-            modelo.addRow(new Object[]{
+            modeloTablaSala.addRow(new Object[]{
                     "Sala " + sala.getNumero(),
                     estado,
                     sala.getCapacidad()
             });
         }
 
-        vista.tablaSala.setModel(modelo);
+        vista.tablaSala.setModel(modeloTablaSala);
     }
 
     @Override

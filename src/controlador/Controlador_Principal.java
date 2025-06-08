@@ -14,8 +14,6 @@ public class Controlador_Principal implements ActionListener {
     public Controlador_Principal() {
         vistaPrincipal = new Vista_Principal();
 
-
-
         vistaPrincipal.btnGestionCartelera.addActionListener(this);
         vistaPrincipal.btnVentarReserva.addActionListener(this);
         vistaPrincipal.btnGestionUsuarios.addActionListener(this);
@@ -43,11 +41,11 @@ public class Controlador_Principal implements ActionListener {
         }
         //REPORTES
         if(e.getSource()==vistaPrincipal.btnReportes){
-
+            new Controlador_Reportes();
         }
         //CONTROL SALAS
         if(e.getSource()==vistaPrincipal.btnControlSalas){
-
+            new Controlador_Gestion_Salas();
         }
         //CONFIGURACION GENERAL
         if(e.getSource()==vistaPrincipal.btnConfiguracionGeneral){
@@ -61,7 +59,6 @@ public class Controlador_Principal implements ActionListener {
         vistaPrincipal.pack();
         vistaPrincipal.setMinimumSize(new Dimension(600, 400));
         vistaPrincipal.setLocationRelativeTo(null);
-
         vistaPrincipal.setVisible(true);
     }
 }

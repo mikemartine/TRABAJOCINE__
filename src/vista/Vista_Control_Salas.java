@@ -12,5 +12,4 @@ public class Vista_Control_Salas extends JFrame{
     public JButton btnVolver;
     public JButton btnBuscar;
 
-
 }
