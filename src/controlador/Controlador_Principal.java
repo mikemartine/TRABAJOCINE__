@@ -49,7 +49,7 @@ public class Controlador_Principal implements ActionListener {
         }
         //CONFIGURACION GENERAL
         if(e.getSource()==vistaPrincipal.btnConfiguracionGeneral){
-
+            new Controlador_Configuracion_General();
         }
     }
 

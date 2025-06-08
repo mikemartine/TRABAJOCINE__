@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="vista.Vista_Configuracion_General">
+  <grid id="27dc6" binding="JPanelConfiguracionPrincipal" layout-manager="GridLayoutManager" row-count="6" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+    <margin top="0" left="0" bottom="0" right="0"/>
+    <constraints>
+      <xy x="20" y="20" width="552" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <component id="b8dd6" class="javax.swing.JComboBox" binding="cmbCuidad">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <model>
+            <item value="Cuidad"/>
+          </model>
+        </properties>
+      </component>
+      <component id="d2ac2" class="javax.swing.JTextField" binding="txtFieldConfiguracionGeneral">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Configuracion General"/>
+        </properties>
+      </component>
+      <component id="60a4b" class="javax.swing.JComboBox" binding="cmbCine">
+        <constraints>
+          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <model>
+            <item value="Cine"/>
+          </model>
+        </properties>
+      </component>
+      <component id="c065" class="javax.swing.JButton" binding="btnCartelera">
+        <constraints>
+          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Cartelera"/>
+        </properties>
+      </component>
+      <component id="e5dea" class="javax.swing.JComboBox" binding="cmbSala">
+        <constraints>
+          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <model>
+            <item value="Sala"/>
+          </model>
+        </properties>
+      </component>
+      <component id="9c460" class="javax.swing.JTextField" binding="txtFielReglasDeNegocio">
+        <constraints>
+          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Reglas de Negocio"/>
+        </properties>
+      </component>
+      <component id="4523d" class="javax.swing.JButton" binding="btnPrecios">
+        <constraints>
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Precios"/>
+        </properties>
+      </component>
+      <component id="f69ea" class="javax.swing.JButton" binding="btnPromociones">
+        <constraints>
+          <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Promociones"/>
+        </properties>
+      </component>
+      <component id="74c3e" class="javax.swing.JButton" binding="btnHorarios">
+        <constraints>
+          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Horarios"/>
+        </properties>
+      </component>
+      <component id="7e93d" class="javax.swing.JTextField" binding="txtFieldRolesUsuario">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value="Roles Usuario"/>
+        </properties>
+      </component>
+      <component id="aeeba" class="javax.swing.JButton" binding="btnCrearUsuario">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Crear Usuario"/>
+        </properties>
+      </component>
+      <component id="fd9b3" class="javax.swing.JButton" binding="btnEditarUsuario">
+        <constraints>
+          <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Editar Usuario"/>
+        </properties>
+      </component>
+      <component id="76707" class="javax.swing.JButton" binding="btnSuspencionUsuario">
+        <constraints>
+          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Suspencion Usuario"/>
+        </properties>
+      </component>
+    </children>
+  </grid>
+</form>
