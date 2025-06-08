@@ -46,9 +46,7 @@ public class Controlador_Login implements ActionListener {
                 JOptionPane.showMessageDialog(vistaLogin, "Usuario Autenticado", null, JOptionPane.INFORMATION_MESSAGE);
                 System.out.println("Ingreso");
                 new Controlador_Principal();
-                //modelo.usuarioActivo = ciudadano;
-                //new ControladorUsuarioGeneral(ciudadano);
-                //vista.dispose();
+
             }
 
         }

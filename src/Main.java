@@ -10,6 +10,7 @@ public class Main {
         //new Controlador_Principal();
         //new Controlador_Gestion_Cartelera();
         //new Controlador_Ventas_y_Reservas();
+        //new Controlador_Gestion_Usuarios_Clientes();
         BaseDatosCine.cargarDatosDePrueba();
         //new Controlador_Gestion_Salas();
         //new Controlador_Reportes();

@@ -37,7 +37,7 @@ public class Controlador_Principal implements ActionListener {
         }
         //GESTION USUARIOS
         if(e.getSource()==vistaPrincipal.btnGestionUsuarios){
-
+            new Controlador_Gestion_Usuarios_Clientes();
         }
         //REPORTES
         if(e.getSource()==vistaPrincipal.btnReportes){
@@ -56,8 +56,9 @@ public class Controlador_Principal implements ActionListener {
     private void inicializarVentana(){
         vistaPrincipal.setContentPane(vistaPrincipal.JPanelPrincipal);
         vistaPrincipal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        vistaPrincipal.pack();
+
         vistaPrincipal.setMinimumSize(new Dimension(600, 400));
+        vistaPrincipal.pack();
         vistaPrincipal.setLocationRelativeTo(null);
         vistaPrincipal.setVisible(true);
     }
