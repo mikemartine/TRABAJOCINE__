@@ -18,7 +18,7 @@ public class Controlador_RegistrarUsuario implements ActionListener {
     public Controlador_RegistrarUsuario() {
 
         vistaRegistrarUsuario = new Vista_RegistrarUsuario();
-        //modelo = new Funciones_Modelo();
+        modelo = new Funciones_Modelo();
 
         //inicializar
         inicializarVentana();
@@ -34,16 +34,33 @@ public class Controlador_RegistrarUsuario implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if(e.getSource() == vistaRegistrarUsuario.btnRegistrar){
+            String username = vistaRegistrarUsuario.txtUsername.getText().trim();
+            String password = vistaRegistrarUsuario.txtPassword.getText().trim();
+            String rol = vistaRegistrarUsuario.comboRol.getSelectedItem().toString();
+
+            if (username.isEmpty() || password.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor complete todos los campos.");
+                return;
+            }
+
+            Usuario nuevoUsuario = new Usuario(username, password, rol);
+
+            if (modelo.registrarUsuario(nuevoUsuario)) {
+                JOptionPane.showMessageDialog(null, "Usuario registrado correctamente.");
+                vistaRegistrarUsuario.dispose(); // Cierra la ventana
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al registrar usuario.");
+            }
 
         }
 
     }
 
     private void inicializarVentana(){
-        vistaRegistrarUsuario.setContentPane(vistaRegistrarUsuario.JPanel_Registarusurario);
-        vistaRegistrarUsuario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        /*vistaRegistrarUsuario.setContentPane(vistaRegistrarUsuario.JPanel_Registarusurario);
+        vistaRegistrarUsuario.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         vistaRegistrarUsuario.setSize(600, 400);
-        vistaRegistrarUsuario.setLocationRelativeTo(null);
+        vistaRegistrarUsuario.setLocationRelativeTo(null);*/
         vistaRegistrarUsuario.setVisible(true);
     }
     private void inicializarCombo(){

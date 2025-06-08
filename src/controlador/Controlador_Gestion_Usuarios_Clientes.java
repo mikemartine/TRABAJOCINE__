@@ -11,6 +11,10 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.BufferedWriter;
+import java.io.PrintWriter;
+import java.io.IOException;
 
 public class Controlador_Gestion_Usuarios_Clientes implements ActionListener {
 
@@ -60,7 +64,7 @@ public class Controlador_Gestion_Usuarios_Clientes implements ActionListener {
 
                 Cliente nuevo = new Cliente(id, nombre, email, new Membresia(tipoMembresia, puntos));
                 modeloUsuariosClientes.getListaClientes().add(nuevo);
-
+                modeloUsuariosClientes.guardarClientesEnArchivo();
                 cargarClientesEnTabla(); // actualiza la tabla
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error al ingresar datos. Verifica los campos.");
@@ -97,11 +101,16 @@ public class Controlador_Gestion_Usuarios_Clientes implements ActionListener {
                     clienteEncontrado.setEmail(nuevoEmail);
                     clienteEncontrado.setMembresia(new Membresia(nuevaMembresia, nuevosPuntos));
 
+                    modeloUsuariosClientes.guardarClientesEnArchivo();
+                    cargarClientesEnTabla();
                 } else if (opcion == 1) { // Eliminar
                     modeloUsuariosClientes.getListaClientes().remove(clienteEncontrado);
+                    modeloUsuariosClientes.guardarClientesEnArchivo();
+                    cargarClientesEnTabla();
+
                 }
 
-                cargarClientesEnTabla(); // actualiza tabla
+                //cargarClientesEnTabla(); // actualiza tabla
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error al procesar datos. Intente de nuevo.");
@@ -111,7 +120,19 @@ public class Controlador_Gestion_Usuarios_Clientes implements ActionListener {
             try {
                 String username = JOptionPane.showInputDialog("Ingrese username:");
                 String password = JOptionPane.showInputDialog("Ingrese password:");
-                String rol = JOptionPane.showInputDialog("Ingrese rol (Administrador, Operador, etc):");
+
+                // Crear ComboBox con roles
+                String[] roles = {"Administrador", "Operador", "Cajero"};
+                JComboBox<String> comboRol = new JComboBox<>(roles);
+
+                // Mostrar el ComboBox en un JOptionPane
+                int opcion = JOptionPane.showConfirmDialog(null, comboRol, "Seleccione rol", JOptionPane.OK_CANCEL_OPTION);
+
+                if (opcion != JOptionPane.OK_OPTION) {
+                    return; // Usuario canceló
+                }
+
+                String rol = (String) comboRol.getSelectedItem();
 
                 // Validar existencia
                 boolean existe = modeloUsuariosClientes.getListaUsuarios().stream()
@@ -125,7 +146,20 @@ public class Controlador_Gestion_Usuarios_Clientes implements ActionListener {
                 Usuario nuevo = new Usuario(username, password, rol);
                 modeloUsuariosClientes.getListaUsuarios().add(nuevo);
 
+                // Guardar en archivo
+                try (FileWriter fw = new FileWriter("usuarios.txt", true);
+                     BufferedWriter bw = new BufferedWriter(fw);
+                     PrintWriter out = new PrintWriter(bw)) {
+
+                    out.println(username + "," + password + "," + rol);
+
+
+                } catch (IOException ioe) {
+                    JOptionPane.showMessageDialog(null, "Error al guardar el usuario en el archivo.");
+                }
+
                 cargarUsuariosEnTabla(); // actualiza la tabla
+
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Error al ingresar datos. Verifica los campos.");
             }
@@ -163,6 +197,19 @@ public class Controlador_Gestion_Usuarios_Clientes implements ActionListener {
                 } else if (opcion == 1) { // Eliminar
                     modeloUsuariosClientes.getListaUsuarios().remove(usuarioEncontrado);
                 }
+
+                try (FileWriter fw = new FileWriter("usuarios.txt", false); // false para sobrescribir
+                     BufferedWriter bw = new BufferedWriter(fw);
+                     PrintWriter out = new PrintWriter(bw)) {
+
+                    for (Usuario u : modeloUsuariosClientes.getListaUsuarios()) {
+                        out.println(u.getUsername() + "," + u.getPassword() + "," + u.getRol());
+                    }
+
+                } catch (IOException ioe) {
+                    JOptionPane.showMessageDialog(null, "Error al guardar cambios en el archivo.");
+                }
+
 
                 cargarUsuariosEnTabla(); // Actualiza tabla
 

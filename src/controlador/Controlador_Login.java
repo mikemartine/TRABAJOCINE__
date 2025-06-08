@@ -23,7 +23,7 @@ public class Controlador_Login implements ActionListener {
         inicializarVentana();
 
         //Cargamos un Administrador
-        modelo.cargar_Usuario_Administrador();
+        //modelo.cargar_Usuario_Administrador();
 
         //actions listeneres
         vistaLogin.btnIniciarSesion.addActionListener(this);
@@ -38,7 +38,7 @@ public class Controlador_Login implements ActionListener {
             String username = vistaLogin.txtUsuario.getText();
             String password = vistaLogin.txtPassword.getText();
 
-            Usuario usuario = modelo.login(username,password);
+            Usuario usuario = modelo.loginDesdeArchivo(username,password);
 
             if (usuario == null) {
                 JOptionPane.showMessageDialog(vistaLogin, "Usuario o contrasenia Incorrectos", "Error al Iniciar", JOptionPane.ERROR_MESSAGE);
@@ -58,10 +58,11 @@ public class Controlador_Login implements ActionListener {
     }
 
     private void inicializarVentana(){
-        vistaLogin.setContentPane(vistaLogin.JPanelLogin);
+        /*vistaLogin.setContentPane(vistaLogin.JPanelLogin);
         vistaLogin.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        vistaLogin.setSize(600, 400);
+        vistaLogin.setSize(400, 300);
         vistaLogin.setLocationRelativeTo(null);
+        vistaLogin.setVisible(true);*/
         vistaLogin.setVisible(true);
     }
 }
