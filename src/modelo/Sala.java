@@ -4,6 +4,8 @@ public class Sala {
 
     private int numero;
     private int capacidad;
+    private int filas;
+    private int columnas;
     private Asiento[][] asientos;
     private Pelicula peliculaAsignada;
 
@@ -11,7 +13,6 @@ public class Sala {
         this.peliculaAsignada = pelicula;
         pelicula.setSalaAsignada(this);
     }
-
 
     public Sala(int numero, int filas, int columnas){
         this.numero = numero;
@@ -23,9 +24,55 @@ public class Sala {
             }
         }
     }
+
+    public boolean hayAsientosDisponibles(){
+        for(int i = 0; i < filas ; i++ ){
+            for (int j = 0; j < columnas; j++){
+                if (!asientos[i][j].getEstado().equalsIgnoreCase("Ocupado")){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public String getEstado(){
+        return hayAsientosDisponibles() ? "Disponible" : "Ocupado";
+    }
+
+
+    //Metodos getters
+
+    public int getNumero() {
+        return numero;
+    }
+
+    public int getCapacidad(){
+        return capacidad;
+    }
+
     public Asiento[][] getAsientos() {
         return asientos;
     }
+
+    public Pelicula getPeliculaAsignada(){
+        return peliculaAsignada;
+    }
+
+    public int getFilas(){
+        return filas;
+    }
+
+    public int getColumnas(){
+        return columnas;
+    }
+
+    @Override
+    public String toString(){
+        return "Sala" + numero + " - " + getEstado();
+    }
+
+
     public void mostrarPlanoAsientos() {
         int filas = asientos.length;
         int columnas = asientos[0].length;
@@ -52,7 +99,5 @@ public class Sala {
         }
     }
 
-    public int getNumero() {
-        return numero;
-    }
+
 }

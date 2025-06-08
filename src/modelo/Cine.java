@@ -62,4 +62,10 @@ public class Cine {
     public void setListaSalas(ArrayList<Sala> listaSalas) {
         this.listaSalas = listaSalas;
     }
+
+    @Override
+    public String toString() {
+        return nombre + " - " + direccion;
+    }
+
 }
