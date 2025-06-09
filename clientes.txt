@@ -1,0 +1,5 @@
+1,Carlos,carlos@gmail.com,,0
+2,Juan,juan@gmail.com,Normal,100
+3,Felipe,felipe@gmail.com,Normal,100
+4,Esteban,esteban@gmail.com,Premiun,500
+5,Julio,julio@gmail.com,Premiun,800

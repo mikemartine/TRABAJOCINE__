@@ -1,0 +1,7 @@
+admin,1234,Administrador
+David,jodfof.sdfsd,Administrador
+Josue,jiiefsfd,Taquilla
+Mateo,ofgfgddd,Operador
+Esteban,apppasd,Operador
+MIKE,1234,Administrador
+HOLLO,DFG,Operador

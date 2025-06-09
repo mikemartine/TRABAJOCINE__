@@ -33,7 +33,7 @@ public class Controlador_Ventas_y_Reservas implements ActionListener {
 
     private void inicializarVentana(){
         vistaVentasYReservas.setContentPane(vistaVentasYReservas.JPanelVentaryReservas);
-        vistaVentasYReservas.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        vistaVentasYReservas.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
        // vistaVentasYReservas.pack();
         vistaVentasYReservas.setMinimumSize(new Dimension(600, 400));
         vistaVentasYReservas.setLocationRelativeTo(null);

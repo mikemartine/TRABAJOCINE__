@@ -32,4 +32,16 @@ public class Usuario {
     public String getRol() {
         return rol;
     }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
 }
